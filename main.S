@@ -13,6 +13,10 @@ main:                                   # @main
 	.cfi_def_cfa_register %rbp
 	subq	$16, %rsp
 	movl	$0, -16(%rbp)
+	movabsq	$.L.str, %rdi
+	leaq	-12(%rbp), %rsi
+	movb	$0, %al
+	callq	__isoc99_scanf@PLT
 	movl	$2, -4(%rbp)
 	movl	$1, -8(%rbp)
 .LBB0_1:                                # =>This Inner Loop Header: Depth=1
@@ -29,7 +33,7 @@ main:                                   # @main
 	jmp	.LBB0_1
 .LBB0_3:
 	movl	-8(%rbp), %esi
-	movabsq	$.L.str, %rdi
+	movabsq	$.L.str.1, %rdi
 	movb	$0, %al
 	callq	printf@PLT
 	xorl	%eax, %eax
@@ -44,8 +48,13 @@ main:                                   # @main
 	.type	.L.str,@object                  # @.str
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .L.str:
+	.asciz	"%d"
+	.size	.L.str, 3
+
+	.type	.L.str.1,@object                # @.str.1
+.L.str.1:
 	.asciz	"%d\n"
-	.size	.L.str, 4
+	.size	.L.str.1, 4
 
 	.ident	"Ubuntu clang version 14.0.0-1ubuntu1.1"
 	.section	".note.GNU-stack","",@progbits
